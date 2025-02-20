@@ -10,10 +10,10 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import backgroundImage2 from "../assets/backgroundImage2.png";
-import sliderImage1 from "../assets/sliderImage1.jpeg";
-import sliderImage2 from "../assets/sliderImage2.jpeg";
-import sliderImage3 from "../assets/sliderImage3.jpeg";
+import backgroundImage2 from "../assets/images/backgroundImage2.png";
+import sliderImage1 from "../assets/images/sliderImage1.jpeg";
+import sliderImage2 from "../assets/images/sliderImage2.jpeg";
+import sliderImage3 from "../assets/images/sliderImage3.jpeg";
 
 
 const products = [

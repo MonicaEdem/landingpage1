@@ -1,11 +1,11 @@
 import React from "react";
-import Facebook from "../assets/facebook.svg";
-import Instagram from "../assets/instagram.svg";
-import Tiktok from "../assets/tiktok.svg";
-import Linkedin from "../assets/linkedin.svg";
-import Twitter from "../assets/twitterx.svg";
+import Facebook from "../assets/images/facebook.svg";
+import Instagram from "../assets/images/instagram.svg";
+import Tiktok from "../assets/images/tiktok.svg";
+import Linkedin from "../assets/images/linkedin.svg";
+import Twitter from "../assets/images/twitterx.svg";
 import { Phone, Mail } from "lucide-react";
-import logo from "../assets/logo.png";
+import logo from "../assets/images/logo.png";
 
 const Footer = () => {
   const footerData = {

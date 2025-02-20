@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Recycle, CheckCircle, Lightbulb } from "lucide-react";
-import innovatorImage from "../assets/innovatorImage.jpeg";
+import innovatorImage from "../assets/images/innovatorImage.jpeg";
 
 export default function InnovatorSection() {
   const { ref, inView } = useInView({

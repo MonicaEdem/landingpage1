@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import backgroundImage1 from "../assets/backgroundImage1.png";
+import backgroundImage1 from "../assets/images/backgroundImage1.png";
 
 const HeroSection = () => {
   return (
