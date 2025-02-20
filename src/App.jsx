@@ -1,19 +1,21 @@
 import './App.css'
-import AboutInnovator from './components/aboutInnovator'
+import InnovatorSection from './components/aboutInnovator'
 import AboutProducts from './components/AboutProducts'
 import Footer from './components/Footer'
+import HeroSection from './components/HeroSection'
 import NavBar from './components/NavBar'
 import Products from './components/Products'
 
 function App() {
   return (
-    <>
+    <div className='scroll-smooth overflow-y-auto h-screen'>
     <NavBar />
+    <HeroSection />
     <AboutProducts />
-    <Products />
-    <AboutInnovator />
+     <Products />
+   <InnovatorSection /> 
     <Footer />
-    </>
+    </div>
   )
 }
 
