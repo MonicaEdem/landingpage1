@@ -12,7 +12,7 @@ function App() {
     <NavBar />
     <HeroSection />
     <AboutProducts />
-     <Products />
+    <Products />
    <AboutInnovator /> 
     <Footer />
     </div>
