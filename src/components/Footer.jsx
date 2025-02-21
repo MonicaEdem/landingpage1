@@ -70,7 +70,7 @@ const Footer = () => {
       <div className="bg-[#1A1A1A]">
         <hr className="border-[#444] my-4 mr-6 ml-6" />
         <p className="text-center text-sm text-green-500 py-4">
-          © {new Date().getFullYear()} Business name. All rights reserved.
+          © {new Date().getFullYear()} Helicimush. All rights reserved.
         </p>
       </div>
     </footer>
