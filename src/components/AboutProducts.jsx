@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Leaf, Dumbbell, Sprout } from "lucide-react";
+import mushroomImage from "../assets/images/mushroom.jpg";
 
 const AboutProducts = () => {
   return (
@@ -9,16 +10,23 @@ const AboutProducts = () => {
         <motion.h2
           className="text-3xl font-bold text-orange-400 mb-6"
           initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           About Our Products
         </motion.h2>
-        <p className="text-gray-700 mb-8">
+        <motion.p
+          className="text-gray-700 mb-8"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.2 }}
+        >
           We take pride in offering premium, organic mushroom-based products that
           are crafted with care. Our selection includes nutrient-rich mushroom powder,
           delicious mushroom soup, and flavorful mushroom jerky.
-        </p>
+        </motion.p>
       </div>
 
       {/* Product Features */}
@@ -29,13 +37,13 @@ const AboutProducts = () => {
             className="relative p-6 rounded-lg shadow-md text-center overflow-hidden 
                        bg-gradient-to-tr from-orange-50 to-green-50 border border-none"
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: index * 0.2 }}
           >
-            {/* Background Image with Low Opacity */}
             <img
-              src="https://cdn.pixabay.com/photo/2021/12/27/09/42/mushroom-6896722_1280.jpg"
-              alt="Background"
+              src={mushroomImage}
+              alt="backgroundImage"
               className="absolute bottom-0 left-0 w-full h-1/2 opacity-10 object-cover"
             />
 

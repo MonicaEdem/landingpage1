@@ -41,19 +41,19 @@ export default function AboutInnovator() {
           {paragraph}
         </p>
         <div className="space-y-4">
-          <div className="flex items-center space-x-3 text-gray-700">
-            <CheckCircle className="text-green-500" size={24} />
-            <span>Committed to Eco-Friendly Manufacturing</span>
-          </div>
-          <div className="flex items-center space-x-3 text-gray-700">
-            <Lightbulb className="text-green-500" size={24} />
-            <span>Redefining Ceramic Design with Innovation</span>
-          </div>
-          <div className="flex items-center space-x-3 text-gray-700">
-            <Recycle className="text-green-500" size={24} />
-            <span>Striving for Zero Waste in Every Product</span>
-          </div>
-        </div>
+  <div className="flex flex-wrap items-start gap-x-3 text-gray-700">
+    <CheckCircle className="text-green-500 flex-shrink-0" size={24} />
+    <span className="flex-1">Committed to Eco-Friendly Manufacturing</span>
+  </div>
+  <div className="flex flex-wrap items-start gap-x-3 text-gray-700">
+    <Lightbulb className="text-green-500 flex-shrink-0" size={24} />
+    <span className="flex-1">Redefining Ceramic Design with Innovation</span>
+  </div>
+  <div className="flex flex-wrap items-start gap-x-3 text-gray-700">
+    <Recycle className="text-green-500 flex-shrink-0" size={24} />
+    <span className="flex-1">Striving for Zero Waste in Every Product</span>
+  </div>
+</div>
       </div>
     </motion.div>
   );

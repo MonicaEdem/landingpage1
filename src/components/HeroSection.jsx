@@ -4,7 +4,14 @@ import backgroundImage1 from "../assets/images/backgroundImage1.png";
 
 const HeroSection = () => {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-orange-50 to-green-50" id="home">
+    <motion.div
+      className="relative overflow-hidden bg-gradient-to-br from-green-50 via-orange-50 to-green-50"
+      id="home"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+    >
+      {/* Background Overlay */}
       <div
         className="absolute inset-0 opacity-5"
         style={{
@@ -14,51 +21,76 @@ const HeroSection = () => {
         }}
       ></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-24 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-40 sm:pt-48 pb-24 relative">
+        {/* Decorative Blurred Circles */}
         <div className="absolute top-0 right-0 -translate-y-1/2 w-64 h-64 bg-orange-100 rounded-full blur-3xl opacity-30"></div>
         <div className="absolute bottom-0 left-0 translate-y-1/2 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-30"></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Nature's Finest <span className="text-orange-400">Mushrooms</span>{" "}
-              for Your <span className="text-green-500">Wellness</span>
+        {/* Balanced Layout for Tablets & Large Screens */}
+        <div className="grid grid-cols-1 md:grid-cols-[0.8fr,1fr] lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Text Section */}
+          <motion.div
+            className="relative z-10"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Nature's Finest{" "}
+              <span className="text-orange-400">Mushrooms</span> for Your{" "}
+              <span className="text-green-500">Wellness</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed">
               Discover our carefully cultivated organic mushrooms and
               concentrated powder supplements, crafted to enhance your daily
               wellness journey.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-orange-400 hover:to-orange-500 transition-all shadow-lg hover:shadow-xl">
-                Shop Collection
-              </button>
-              <button className="bg-gradient-to-r from-green-50 to-green-100 px-8 py-4 rounded-xl font-semibold text-green-700 hover:from-green-100 hover:to-green-200 transition-all border border-green-200">
-                Learn More
-              </button>
+
+            {/* Buttons Section */}
+            <div className="flex flex-wrap justify-center md:justify-start gap-4">
+              <motion.a
+                href="#products"
+                className="w-full sm:w-auto text-center"
+                whileTap={{ scale: 0.9 }}
+              >
+                <button className="w-full sm:w-auto bg-gradient-to-r from-orange-400 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-orange-400 hover:to-orange-500 transition-all shadow-lg hover:shadow-xl active:scale-95 transition-transform">
+                  Our Products
+                </button>
+              </motion.a>
+              <motion.a
+                href="#about"
+                className="w-full sm:w-auto text-center"
+                whileTap={{ scale: 0.9 }}
+              >
+                <button className="w-full sm:w-auto bg-gradient-to-r from-green-50 to-green-100 px-8 py-4 rounded-xl font-semibold text-green-700 hover:from-green-100 hover:to-green-200 transition-all border border-green-200 active:scale-95 transition-transform">
+                  Learn More
+                </button>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Image Section (Floating Animation) */}
           <motion.div
             className="relative z-10 flex justify-center"
-            initial={{ opacity: 1, y: 0 }}
-            animate={{
-              y: [0, -10, 0],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: 3,
-              ease: "easeInOut",
-            }}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
           >
-            <img
+            <motion.img
               src={backgroundImage1}
               alt="Fresh organic mushrooms"
-              className="w-full h-[500px] object-cover"
+              className="w-[90%] md:w-full max-h-[500px] md:max-h-[550px] object-contain"
+              animate={{ y: [0, -10, 0] }}
+              transition={{
+                repeat: Infinity,
+                duration: 3,
+                ease: "easeInOut",
+              }}
             />
           </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
