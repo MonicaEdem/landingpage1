@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { Recycle, CheckCircle, Lightbulb } from "lucide-react";
 import innovatorImage from "../assets/images/innovatorImage.jpeg";
 
-export default function InnovatorSection() {
+export default function AboutInnovator() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,

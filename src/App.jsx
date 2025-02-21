@@ -1,5 +1,5 @@
 import './App.css'
-import InnovatorSection from './components/aboutInnovator'
+import AboutInnovator from './components/AboutInnovator'
 import AboutProducts from './components/AboutProducts'
 import Footer from './components/Footer'
 import HeroSection from './components/HeroSection'
@@ -13,7 +13,7 @@ function App() {
     <HeroSection />
     <AboutProducts />
      <Products />
-   <InnovatorSection /> 
+   <AboutInnovator /> 
     <Footer />
     </div>
   )
