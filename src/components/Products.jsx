@@ -62,11 +62,11 @@ const Products = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative px-8 py-16 lg:px-24 bg-gradient-to-b from-green-50 to-orange-50"
+      className="relative px-8 py-14 lg:px-24 bg-gradient-to-b from-green-50 to-orange-50"
       id="products"
     >
       <motion.h2
-        className="text-3xl font-bold text-green-700 mb-4 text-center"
+        className="text-3xl font-bold text-green-700 mb-8 text-center"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -76,7 +76,7 @@ const Products = () => {
       </motion.h2>
       
       <motion.p
-        className="text-gray-600 max-w-2xl mx-auto mb-12 text-center"
+        className="text-gray-600 mx-auto mb-12 text-center text-lg"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -121,7 +121,7 @@ const Products = () => {
                 <img src={product.image} alt={product.name} className="w-full object-cover h-64" />
                 <div className="p-4">
                   <h3 className="text-green-600 text-lg font-semibold">{product.name}</h3>
-                  <p className="text-sm text-gray-700">{product.description}</p>
+                  <p className="text-base text-gray-700">{product.description}</p>
                 </div>
               </motion.div>
             </SwiperSlide>

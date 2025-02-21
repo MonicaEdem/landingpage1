@@ -20,10 +20,10 @@ export default function AboutInnovator() {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8 }}
-      className="flex flex-col md:flex-row-reverse gap-12 items-center px-6 py-12 sm:px-12 lg:px-20 xl:px-24"  id="about-innovator"
+      className="flex flex-col md:flex-row-reverse gap-12 items-center px-6 pt-14 pb-6 sm:px-12 lg:px-20 xl:px-24"  id="about-innovator"
     >
       {/* Image Section (Now on the Right Side) */}
-      <div className="flex-1 h-full flex items-center justify-center">
+      <div className="flex-1 h-full flex items-center justify-center lg:mt-6">
         <img
           src= {innovatorImage}
           alt="Innovator"
@@ -33,23 +33,23 @@ export default function AboutInnovator() {
 
       {/* Text Section (Now on the Left Side) */}
       <div className="flex-1 text-center md:text-left">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-orange-400">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-orange-400">
           {title}
         </h2>
         <h3 className="text-xl sm:text-2xl text-green-500 mb-4">Bridget kudoagbo</h3>
-        <p className="text-gray-600 mb-6 text-lg sm:text-base leading-relaxed">
+        <p className="text-gray-600 mb-8 text-lg  leading-loose">
           {paragraph}
         </p>
         <div className="space-y-4">
-  <div className="flex flex-wrap items-start gap-x-3 text-gray-700">
+  <div className="flex flex-wrap items-start gap-x-3 text-gray-700 text-lg">
     <CheckCircle className="text-green-500 flex-shrink-0" size={24} />
     <span className="flex-1">Committed to Eco-Friendly Manufacturing</span>
   </div>
-  <div className="flex flex-wrap items-start gap-x-3 text-gray-700">
+  <div className="flex flex-wrap items-start gap-x-3 text-gray-700 text-lg">
     <Lightbulb className="text-green-500 flex-shrink-0" size={24} />
     <span className="flex-1">Redefining Ceramic Design with Innovation</span>
   </div>
-  <div className="flex flex-wrap items-start gap-x-3 text-gray-700">
+  <div className="flex flex-wrap items-start gap-x-3 text-gray-700 text-lg">
     <Recycle className="text-green-500 flex-shrink-0" size={24} />
     <span className="flex-1">Striving for Zero Waste in Every Product</span>
   </div>

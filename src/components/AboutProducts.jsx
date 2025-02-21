@@ -5,10 +5,10 @@ import mushroomImage from "../assets/images/mushroom.jpg";
 
 const AboutProducts = () => {
   return (
-    <div className="px-8 py-16 lg:px-24 bg-white" id="about">
+    <div className="px-8 py-14 lg:px-24 bg-white" id="about">
       <div className="max-w-5xl mx-auto text-center">
         <motion.h2
-          className="text-3xl font-bold text-orange-400 mb-6"
+          className="text-3xl font-bold text-orange-400 mb-8"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -17,7 +17,7 @@ const AboutProducts = () => {
           About Our Products
         </motion.h2>
         <motion.p
-          className="text-gray-700 mb-8"
+          className="text-gray-700 mb-8 text-lg"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -55,7 +55,7 @@ const AboutProducts = () => {
               <h3 className="text-xl font-semibold mb-2 text-green-500">
                 {feature.title}
               </h3>
-              <p className="text-gray-700">{feature.description}</p>
+              <p className="text-gray-700 text-lg">{feature.description}</p>
             </div>
           </motion.div>
         ))}

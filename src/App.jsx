@@ -5,15 +5,17 @@ import Footer from './components/Footer'
 import HeroSection from './components/HeroSection'
 import NavBar from './components/NavBar'
 import Products from './components/Products'
+import ClientShowcase from './components/ShowcaseSection'
 
 function App() {
   return (
-    <div className='scroll-smooth overflow-y-auto h-screen'>
+    <div className='scroll-smooth h-screen'>
     <NavBar />
     <HeroSection />
     <AboutProducts />
     <Products />
    <AboutInnovator /> 
+   <ClientShowcase />
     <Footer />
     </div>
   )

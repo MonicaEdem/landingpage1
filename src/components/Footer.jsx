@@ -19,22 +19,22 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#121212] text-white py-12" id="contact">
+    <footer className="bg-[#222222] text-white py-12" id="contact">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 text-center lg:text-left">
           
           {/* Logo & Motto */}
           <div className="flex flex-col items-center lg:items-start">
             <img src={logo} alt="logo" className="mb-4 w-24 h-24 shadow-lg" />
-            <p className="text-green-500 text-base leading-relaxed max-w-xs text-center lg:text-left">
-              "Sustainable Living, Inspired by Nature."
+            <p className="text-green-500 text-lg leading-loose max-w-xs text-center lg:text-left">
+              Sustainable Living, Inspired by Nature
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="flex flex-col items-center lg:items-start">
-            <h3 className="text-lg font-semibold mb-4 text-orange-400">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-xl font-semibold mb-4 text-orange-400">Quick Links</h3>
+            <ul className="space-y-2 text-lg">
               <li><a href="#about" className="hover:text-green-500 transition duration-300">About</a></li>
               <li><a href="#products" className="hover:text-green-500 transition duration-300">Products</a></li>
               <li><a href="#about-innovator" className="hover:text-green-500 transition duration-300">Our Story</a></li>
@@ -43,8 +43,8 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="flex flex-col items-center lg:items-start">
-            <h3 className="text-lg font-semibold mb-4 text-orange-400">Contact Us</h3>
-            <div className="flex items-center space-x-3 mb-2">
+            <h3 className="text-xl font-semibold mb-4 text-orange-400">Contact Us</h3>
+            <div className="flex items-center space-x-3 mb-2  text-lg">
               <Phone className="w-5 h-5 text-green-500" />
               <a href={`tel:${footerData.phoneNumber}`} className="hover:text-green-500 transition duration-300">
                 {footerData.phoneNumber}
@@ -59,8 +59,8 @@ const Footer = () => {
           </div>
 
           {/* Social Media Links */}
-          <div className="flex flex-col items-center lg:items-start">
-            <h3 className="text-lg font-semibold mb-4 text-orange-400">Stay in Touch</h3>
+          <div className="flex flex-col items-center lg:items-start justify">
+            <h3 className="text-xl font-semibold mb-4 text-orange-400">Stay in Touch</h3>
             <div className="flex space-x-4">
               {[{ link: footerData.facebookLink, img: Facebook },
                 { link: footerData.instagramLink, img: Instagram },
