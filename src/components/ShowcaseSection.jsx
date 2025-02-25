@@ -1,61 +1,83 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { X } from "lucide-react"; // Close icon
-import clientImg from "../assets/images/clients.jpeg";
-import infoImg from "../assets/images/info.jpeg";
-import Add from "../assets/images/image1.jpeg";
-import mushrooms from "../assets/images/sliderImage3.jpeg";
-
-const images = [
-  { src: clientImg, caption: "Happy client receiving their order." },
-  { src: infoImg, caption: "Checkout the benefits of eating oyster mushrooms" },
-  { src: Add, caption: "Our 500g Mushbrown" },
-  { src: mushrooms, caption: "Fresh mushrooms from our farm." },
-];
+import { fetchData } from "../api/Api";
+import loadingImage from "../assets/images/ffffff.png"; // Placeholder while loading
 
 const ClientShowcase = () => {
   const [enlargedImg, setEnlargedImg] = useState(null);
   const [caption, setCaption] = useState("");
+  const [pictures, setPictures] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
+
+  useEffect(() => {
+    fetchData("Sheet1!A1:B100")
+      .then((responseData) => {
+        const dataMap = {};
+        responseData.forEach(row => {
+          if (row.length >= 2) {
+            dataMap[row[0]] = row[1];
+          }
+        });
+
+        const dynamicPictures = [];
+        for (let i = 1; i <= 4; i++) {
+          if (dataMap[`PicturesSection image${i}`]) {
+            dynamicPictures.push({
+              src: dataMap[`PicturesSection image${i}`],
+              caption: dataMap[`PicturesSection text${i}`] || "",
+            });
+          }
+        }
+
+        setPictures(dynamicPictures);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <section className="pt-10 pb-20">
       <div className="container mx-auto px-6 lg:px-20">
-
-        {/* Image Grid - Responsive Design */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {images.map((item, index) => (
-            <div key={index} className="text-center">
-              <img
-                src={item.src}
-                alt={`Showcase ${index + 1}`}
-                className="w-full h-64 object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
-                onClick={() => {
-                  setEnlargedImg(item.src);
-                  setCaption(item.caption);
-                }}
-              />
-              <p className="mt-2 text-lg text-gray-700">{item.caption}</p>
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-gray-500 mt-4">Loading images...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {pictures.map((item, index) => (
+              <div key={index} className="text-center">
+                <img
+                  src={item.src}
+                  alt={`Showcase ${index + 1}`}
+                  className="w-full h-64 object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
+                  onClick={() => {
+                    setEnlargedImg(item.src);
+                    setCaption(item.caption);
+                  }}
+                />
+                <p className="mt-2 text-lg text-gray-700">{item.caption}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Enlarged Image View */}
       {enlargedImg && (
         <div
           className="fixed inset-0 flex flex-col justify-center items-center bg-black/50 backdrop-blur-sm z-50 px-4"
-          onClick={() => setEnlargedImg(null)} // Closes when clicking outside
+          onClick={() => setEnlargedImg(null)}
         >
-          {/* Enlarged Image */}
           <img
             src={enlargedImg}
             alt="Enlarged view"
             className="max-w-[90%] max-h-[80%] object-contain"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
+            onClick={(e) => e.stopPropagation()}
           />
-          {/* Image Caption */}
           <p className="mt-4 text-white text-center text-lg">{caption}</p>
-
-          {/* Close Button */}
           <button
             className="absolute top-5 right-5 bg-black/50 text-white p-2 rounded-full hover:bg-red-500 transition"
             onClick={() => setEnlargedImg(null)}

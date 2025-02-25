@@ -9,7 +9,7 @@ import ClientShowcase from './components/ShowcaseSection'
 
 function App() {
   return (
-    <div className='scroll-smooth h-screen'>
+    <div >
     <NavBar />
     <HeroSection />
     <AboutProducts />

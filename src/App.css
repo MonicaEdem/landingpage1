@@ -13,3 +13,7 @@
     border-radius: 10px;
     min-height: 20px;
 }
+
+html {
+    scroll-behavior: smooth;
+  }

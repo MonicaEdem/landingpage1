@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import { motion } from "framer-motion";
 import backgroundImage1 from "../assets/images/backgroundImage1.png";
+import { fetchData } from "../api/Api";
+import loadingImage from "../assets/images/ffffff.png";
 
 const HeroSection = () => {
+  const [paragraph, setparagraph] = useState("");
+  const [imageUrl, setImageUrl] = useState("null");
+
+  useEffect(() => {
+    fetchData("Sheet1!A1:B100")
+      .then((responseData) => {
+        // Convert data array into an object for easier access
+        const dataMap = {};
+        responseData.forEach(row => {
+          if (row.length >= 2) {
+            dataMap[row[0]] = row[1]; // Map key-value pairs
+          }
+        });
+  
+        setparagraph(dataMap["Paragraph"] || "No paragraph found.");
+        setImageUrl(dataMap["Hero Image"] || loadingImage);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+  
+  
+
   return (
     <motion.div
       className="relative overflow-hidden bg-gradient-to-br from-green-50 via-orange-50 to-green-50"
@@ -36,14 +61,11 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Nature's Finest{" "}
-              <span className="text-orange-400">Mushrooms</span> for Your{" "}
-              <span className="text-green-500">Wellness</span>
+              Nature's Finest <span className="text-orange-400">Mushrooms</span>{" "}
+              for Your <span className="text-green-500">Wellness</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed">
-              Discover our carefully cultivated organic mushrooms and
-              concentrated powder supplements, crafted to enhance your daily
-              wellness journey.
+            {paragraph}
             </p>
 
             {/* Buttons Section */}
@@ -77,7 +99,7 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <motion.img
-              src={backgroundImage1}
+              src={imageUrl}
               alt="Fresh organic mushrooms"
               className="w-[90%] md:w-full max-h-[500px] md:max-h-[550px] object-contain"
               animate={{ y: [0, -10, 0] }}

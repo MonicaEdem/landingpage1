@@ -1,21 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Facebook from "../assets/images/facebook.svg";
 import Instagram from "../assets/images/instagram.svg";
 import Tiktok from "../assets/images/tiktok.svg";
 import Linkedin from "../assets/images/linkedin.svg";
 import Twitter from "../assets/images/twitterx.svg";
 import { Phone, Mail } from "lucide-react";
-import logo from "../assets/images/footerLogo1.png";
+import { fetchData } from "../api/Api";
+import loadingImage from "../assets/images/ffffff.png"; // Placeholder image
 
 const Footer = () => {
-  const footerData = {
-    phoneNumber: "+233550420351",
-    email: "bridgetkudoagbo@gmail.com",
-    facebookLink: "https://facebook.com",
-    instagramLink: "https://instagram.com",
-    tiktokLink: "https://tiktok.com",
-    linkedinLink: "https://linkedin.com",
-    twitterLink: "https://twitter.com",
+  const [paragraph, setParagraph] = useState("Sustainable Living, Inspired by Nature");
+  const [imageUrl, setImageUrl] = useState(loadingImage);
+  const [facebook, setFacebook] = useState("#");
+  const [instagram, setInstagram] = useState("#");
+  const [twitter, setTwitter] = useState("#");
+  const [tikTok, setTikTok] = useState("#");
+  const [linkedIn, setLinkedIn] = useState("#");
+  const [phoneNumber, setPhoneNumber] = useState("+233550420351");
+  const [email, setEmail] = useState("bridgetkudoagbo@gmail.com");
+ 
+
+  useEffect(() => {
+    fetchData("Sheet1!A1:B100")
+      .then((responseData) => {
+        const dataMap = {};
+        responseData.forEach((row) => {
+          if (row.length >= 2) {
+            dataMap[row[0]] = row[1];
+          }
+        });
+
+        setParagraph(dataMap["Slogan"] || paragraph);
+        setImageUrl(dataMap["Footer logo url"] || loadingImage);
+        setFacebook(validateUrl(dataMap["Facebook"]));
+        setInstagram(validateUrl(dataMap["Instagram"]));
+        setTwitter(validateUrl(dataMap["TwitterX"]));
+        setLinkedIn(validateUrl(dataMap["Linkedin"]));
+        setTikTok(validateUrl(dataMap["Tiktok"]));
+
+        // Fix for Phone Number Undefined Issue
+        const apiPhoneNumber = dataMap["Phone number"];
+        if (apiPhoneNumber && apiPhoneNumber.trim() !== "") {
+          setPhoneNumber(apiPhoneNumber.startsWith("+") ? apiPhoneNumber : `+233${apiPhoneNumber}`);
+        }
+
+        setEmail(dataMap["email"] || email);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  // Helper function to validate and format URLs
+  const validateUrl = (url) => {
+    return url && url.startsWith("http") ? url : "#";
   };
 
   return (
@@ -25,9 +61,9 @@ const Footer = () => {
           
           {/* Logo & Motto */}
           <div className="flex flex-col items-center lg:items-start">
-            <img src={logo} alt="logo" className="mb-4 w-24 h-24 shadow-lg" />
+            <img src={imageUrl} alt="logo" className="mb-4 w-24 h-24 shadow-lg rounded-full object-contain" />
             <p className="text-green-500 text-lg leading-loose max-w-xs text-center lg:text-left">
-              Sustainable Living, Inspired by Nature
+              {paragraph}
             </p>
           </div>
 
@@ -44,30 +80,33 @@ const Footer = () => {
           {/* Contact Info */}
           <div className="flex flex-col items-center lg:items-start">
             <h3 className="text-xl font-semibold mb-4 text-orange-400">Contact Us</h3>
-            <div className="flex items-center space-x-3 mb-2  text-lg">
+            <div className="flex items-center space-x-3 mb-2 text-lg">
               <Phone className="w-5 h-5 text-green-500" />
-              <a href={`tel:${footerData.phoneNumber}`} className="hover:text-green-500 transition duration-300">
-                {footerData.phoneNumber}
+              <a href={`tel:${phoneNumber}`} className="hover:text-green-500 transition duration-300">
+                {phoneNumber}
               </a>
             </div>
             <div className="flex items-center space-x-3">
               <Mail className="w-5 h-5 text-green-500" />
-              <a href={`mailto:${footerData.email}`} className="hover:text-green-500 transition duration-300">
-                {footerData.email}
+              <a href={`mailto:${email}`} className="hover:text-green-500 transition duration-300">
+                {email}
               </a>
             </div>
           </div>
 
           {/* Social Media Links */}
-          <div className="flex flex-col items-center lg:items-start justify">
+          <div className="flex flex-col items-center lg:items-start">
             <h3 className="text-xl font-semibold mb-4 text-orange-400">Stay in Touch</h3>
             <div className="flex space-x-4">
-              {[{ link: footerData.facebookLink, img: Facebook },
-                { link: footerData.instagramLink, img: Instagram },
-                { link: footerData.tiktokLink, img: Tiktok },
-                { link: footerData.linkedinLink, img: Linkedin },
-                { link: footerData.twitterLink, img: Twitter }].map((social, index) => (
-                <a key={index} href={social.link} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform duration-300">
+              {[
+                { link: facebook, img: Facebook },
+                { link: instagram, img: Instagram },
+                { link: tikTok, img: Tiktok },
+                { link: linkedIn, img: Linkedin },
+                { link: twitter, img: Twitter }
+              ].map((social, index) => (
+                <a key={index} href={social.link} target="_blank" rel="noopener noreferrer"
+                   className="hover:scale-110 transition-transform duration-300">
                   <img src={social.img} alt="Social Media" className="w-8 h-8" />
                 </a>
               ))}

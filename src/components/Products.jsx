@@ -1,182 +1,171 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { MoveRight, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
-import sliderImage1 from "../assets/images/sliderImage1.jpeg";
-import sliderImage2 from "../assets/images/sliderImage2.jpeg";
-import sliderImage3 from "../assets/images/sliderImage3.jpeg";
-
-const products = [
-  {
-    id: 1,
-    name: "Mushroom home kit",
-    description: "A delicious and hearty mushroom soup made with organic mushrooms and herbs.",
-    image: sliderImage1,
-  },
-  {
-    id: 2,
-    name: "⁠Mushbrown (500g)",
-    description: "A savory and chewy mushroom jerky, packed with umami flavors and nutrients.",
-    image: sliderImage2,
-  },
-  {
-    id: 3,
-    name: "⁠Fresh mushrooms",
-    description: "Finely ground mushroom powder, perfect for adding to soups, smoothies, and dishes.",
-    image: sliderImage3,
-  },
-  {
-    id: 4,
-    name: "Mushroom Powder",
-    description: "Nutrient-rich mushroom powder that boosts immunity and enhances flavor.",
-    image: sliderImage1,
-  },
-];
+import { motion, AnimatePresence } from "framer-motion"; // Import AnimatePresence
+import loadingImage from "../assets/images/ffffff.png";
+import { fetchData } from "../api/Api";
 
 const Products = () => {
+  const [paragraph, setParagraph] = useState("");
+  const [products, setProducts] = useState([]);
+  const [shopLink, setShopLink] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const sectionRef = useRef(null);
   const swiperRef = useRef(null);
-
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  const shopLink = "https://example.com/shop";
+  useEffect(() => {
+    fetchData("Sheet1!A1:B100")
+      .then((responseData) => {
+        const dataMap = {};
+        responseData.forEach(row => {
+          if (row.length >= 2) {
+            dataMap[row[0]] = row[1];
+          }
+        });
 
-  const handleNavigationState = (swiper) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-  };
+        setParagraph(dataMap["ProductsDisplay paragraph"] || "No paragraph found.");
+        setShopLink(dataMap["Shop Button"] || "#");
 
-  const animationVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+        const dynamicProducts = [];
+        for (let i = 1; i <= 4; i++) {
+          dynamicProducts.push({
+            id: i,
+            name: dataMap[`ProductsDisplay title${i}`] || `Product ${i}`,
+            description: dataMap[`ProductsDisplay paragraph${i}`] || "No description available.",
+            image: dataMap[`ProductsDisplay image${i}`] || loadingImage,
+          });
+        }
+
+        setProducts(dynamicProducts);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <div
+    <motion.div
       ref={sectionRef}
       className="relative px-8 py-14 lg:px-24 bg-gradient-to-b from-green-50 to-orange-50"
       id="products"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
     >
       <motion.h2
         className="text-3xl font-bold text-green-700 mb-8 text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={animationVariants}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
       >
         Explore Our Products
       </motion.h2>
-      
-      <motion.p
-        className="text-gray-600 mx-auto mb-12 text-center text-lg"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={{
-          hidden: { opacity: 0, y: 30 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.8, ease: "easeOut" },
-          },
-        }}
-      >
-        Discover our carefully crafted selection of organic mushroom products, designed to enhance your wellness journey. From fresh mushrooms to nutritious powders and tasty snacks, we have something for everyone.
-      </motion.p>
 
-      <div className="relative">
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={20}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="pb-10 relative"
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-          }}
-          onSlideChange={(swiper) => handleNavigationState(swiper)}
-        >
-          {products.map((product) => (
-            <SwiperSlide key={product.id} className="flex flex-col items-center">
-              <motion.div
-                className="bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={animationVariants}
-              >
-                <img src={product.image} alt={product.name} className="w-full object-cover h-64" />
-                <div className="p-4">
-                  <h3 className="text-green-600 text-lg font-semibold">{product.name}</h3>
-                  <p className="text-base text-gray-700">{product.description}</p>
-                </div>
-              </motion.div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-500 mt-4">Loading products...</p>
+        </div>
+      ) : (
+        <AnimatePresence>
+          <motion.p
+            className="text-gray-600 mx-auto mb-12 text-center text-lg"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }} 
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            {paragraph}
+          </motion.p>
 
-        {/* Previous Button */}
-        <motion.button
-          className={`custom-prev absolute top-1/2 left-4 z-10 transform -translate-y-1/2 p-2 rounded-full transition-all ${
-            isBeginning
-              ? "bg-green-500/50 cursor-default"
-              : "bg-green-500/80 hover:bg-green-700 opacity-100 cursor-pointer"
-          }`}
-          aria-label="Previous Slide"
-          onClick={() => swiperRef.current?.slidePrev()}
-        >
-          <ChevronLeft className="w-5 h-5 text-white" />
-        </motion.button>
+          <div className="relative">
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={20}
+              slidesPerView={1}
+              breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
+              className="pb-10 relative"
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onSlideChange={(swiper) => {
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+            >
+              {products.map((product) => (
+                <SwiperSlide key={product.id} className="flex flex-col items-center">
+                  <motion.div
+                    key={product.id} // Forces re-rendering
+                    className="bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                  >
+                    <img src={product.image} alt={product.name} className="w-full object-cover h-64" />
+                    <div className="p-4">
+                      <h3 className="text-green-600 text-lg font-semibold">{product.name}</h3>
+                      <p className="text-base text-gray-700">{product.description}</p>
+                    </div>
+                  </motion.div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-        {/* Next Button */}
-        <motion.button
-          className={`custom-next absolute top-1/2 right-4 z-10 transform -translate-y-1/2 p-2 rounded-full transition-all ${
-            isEnd
-              ? "bg-green-500/50 cursor-default"
-              : "bg-green-500/80 hover:bg-green-700 opacity-100 cursor-pointer"
-          }`}
-          aria-label="Next Slide"
-          onClick={() => swiperRef.current?.slideNext()}
-        >
-          <ChevronRight className="w-5 h-5 text-white" />
-        </motion.button>
-      </div>
+            {/* Previous Button */}
+            <motion.button
+              className={`custom-prev absolute top-1/2 left-4 z-10 transform -translate-y-1/2 p-2 rounded-full transition-all ${
+                isBeginning ? "bg-green-500/50 cursor-default" : "bg-green-500/80 hover:bg-green-700 cursor-pointer"
+              }`}
+              aria-label="Previous Slide"
+              onClick={() => swiperRef.current?.slidePrev()}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </motion.button>
 
-      {/* Call to Action Button */}
-      <motion.div
-        className="flex justify-center mt-10"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={animationVariants}
-      >
-        <motion.a
-          href={shopLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-full hover:bg-orange-400 transition-all duration-200 hover:text-white"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <ShoppingBag className="w-5 h-5" />
-          Shop Products
-          <MoveRight className="w-5 h-5" />
-        </motion.a>
-      </motion.div>
-    </div>
+            {/* Next Button */}
+            <motion.button
+              className={`custom-next absolute top-1/2 right-4 z-10 transform -translate-y-1/2 p-2 rounded-full transition-all ${
+                isEnd ? "bg-green-500/50 cursor-default" : "bg-green-500/80 hover:bg-green-700 cursor-pointer"
+              }`}
+              aria-label="Next Slide"
+              onClick={() => swiperRef.current?.slideNext()}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronRight className="w-5 h-5 text-white" />
+            </motion.button>
+          </div>
+
+          {/* Call to Action Button */}
+          <motion.div className="flex justify-center mt-10" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <motion.a
+              href={shopLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-full hover:bg-orange-400 transition-all duration-200 hover:text-white"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ShoppingBag className="w-5 h-5" />
+              Shop Products
+              <MoveRight className="w-5 h-5" />
+            </motion.a>
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </motion.div>
   );
 };
 

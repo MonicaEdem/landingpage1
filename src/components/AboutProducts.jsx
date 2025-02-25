@@ -1,9 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Leaf, Dumbbell, Sprout } from "lucide-react";
 import mushroomImage from "../assets/images/mushroom.jpg";
+import { fetchData } from "../api/Api";
 
 const AboutProducts = () => {
+
+  const [paragraph, setparagraph] = useState("");
+  const [text1, setText1] = useState("");
+  const [text2, setText2] = useState("");
+  const [text3, setText3] = useState("");
+
+useEffect(() => {
+    fetchData("Sheet1!A1:B100")
+      .then((responseData) => {
+        // Convert data array into an object for easier access
+        const dataMap = {};
+        responseData.forEach(row => {
+          if (row.length >= 2) {
+            dataMap[row[0]] = row[1]; // Map key-value pairs
+          }
+        });
+        setparagraph(dataMap["AboutProduct paragraph"] || "No paragraph found.");
+        setText1(dataMap["AboutProduct Text1"]);
+        setText2(dataMap["AboutProduct Text2"]);
+        setText3(dataMap["AboutProduct Text3"]);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const productFeatures = [
+    {
+      icon: <Leaf size={40} className="text-green-500" />,
+      title: "Organic & Natural",
+      description: text1,
+    },
+    {
+      icon: <Dumbbell size={40} className="text-orange-400" />,
+      title: "Health Benefits",
+      description: text2,
+    },
+    {
+      icon: <Sprout size={40} className="text-green-500" />,
+      title: "Sustainable & Eco-Friendly",
+      description: text3,
+    },
+  ];
+
   return (
     <div className="px-8 py-14 lg:px-24 bg-white" id="about">
       <div className="max-w-5xl mx-auto text-center">
@@ -23,9 +66,7 @@ const AboutProducts = () => {
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          We take pride in offering premium, organic mushroom-based products that
-          are crafted with care. Our selection includes nutrient-rich mushroom powder,
-          delicious mushroom soup, and flavorful mushroom jerky.
+         {paragraph}
         </motion.p>
       </div>
 
@@ -63,26 +104,5 @@ const AboutProducts = () => {
     </div>
   );
 };
-
-const productFeatures = [
-  {
-    icon: <Leaf size={40} className="text-green-500" />,
-    title: "Organic & Natural",
-    description:
-      "Our mushrooms are organically grown, free from chemicals and artificial additives.",
-  },
-  {
-    icon: <Dumbbell size={40} className="text-orange-400" />,
-    title: "Health Benefits",
-    description:
-      "Packed with essential nutrients, our products support immunity and overall well-being.",
-  },
-  {
-    icon: <Sprout size={40} className="text-green-500" />,
-    title: "Sustainable & Eco-Friendly",
-    description:
-      "We prioritize sustainable sourcing and environmentally friendly packaging.",
-  },
-];
 
 export default AboutProducts;
