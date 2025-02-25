@@ -21,8 +21,6 @@ const NavBar = () => {
           }
         });
 
-        console.log("Fetched Data:", dataMap); // Debugging log
-
         if (dataMap["Navbar logo url"] && dataMap["Navbar logo url"].startsWith("http")) {
           setImageUrl(dataMap["Navbar logo url"]);
         }
