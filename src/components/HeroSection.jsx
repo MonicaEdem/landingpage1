@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import backgroundImage1 from "../assets/images/backgroundImage1.png";
 import { fetchData } from "../api/Api";
 import loadingImage from "../assets/images/ffffff.png";
+import heroImage from "../assets/images/backgroundImage1.png"
 
 const HeroSection = () => {
   const [paragraph, setparagraph] = useState("");
-  const [imageUrl, setImageUrl] = useState("null");
+  // const [imageUrl, setImageUrl] = useState("null");
 
   useEffect(() => {
     fetchData("Sheet1!A1:B100")
@@ -21,7 +22,7 @@ const HeroSection = () => {
         });
   
         setparagraph(dataMap["Paragraph"] || "No paragraph found.");
-        setImageUrl(dataMap["Hero Image"] || loadingImage);
+        // setImageUrl(dataMap["Hero Image"] || loadingImage);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -99,7 +100,7 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <motion.img
-              src={imageUrl}
+              src={heroImage}
               alt="Fresh organic mushrooms"
               className="w-[90%] md:w-full max-h-[500px] md:max-h-[550px] object-contain"
               animate={{ y: [0, -10, 0] }}
