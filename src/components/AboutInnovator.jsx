@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Recycle, Leaf, Utensils, RecycleIcon } from "lucide-react";
+import { Leaf, Utensils, RecycleIcon } from "lucide-react";
 import { fetchData } from "../api/Api";
-import loadingImage from "../assets/images/ffffff.png"
 
 export default function AboutInnovator() {
   const [paragraph, setParagraph] = useState("");

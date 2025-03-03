@@ -3,7 +3,6 @@ import Facebook from "../assets/images/facebook.svg";
 import Instagram from "../assets/images/instagram.svg";
 import Tiktok from "../assets/images/tiktok.svg";
 import Linkedin from "../assets/images/linkedin.svg";
-import Twitter from "../assets/images/twitterx.svg";
 import { Phone, Mail } from "lucide-react";
 import { fetchData } from "../api/Api";
 import loadingImage from "../assets/images/ffffff.png"; // Placeholder image
@@ -13,7 +12,6 @@ const Footer = () => {
   const [imageUrl, setImageUrl] = useState(loadingImage);
   const [facebook, setFacebook] = useState("#");
   const [instagram, setInstagram] = useState("#");
-  const [twitter, setTwitter] = useState("#");
   const [tikTok, setTikTok] = useState("#");
   const [linkedIn, setLinkedIn] = useState("#");
   const [phoneNumber, setPhoneNumber] = useState("+233550420351");
@@ -34,7 +32,6 @@ const Footer = () => {
         setImageUrl(dataMap["Footer logo url"] || loadingImage);
         setFacebook(validateUrl(dataMap["Facebook"]));
         setInstagram(validateUrl(dataMap["Instagram"]));
-        setTwitter(validateUrl(dataMap["TwitterX"]));
         setLinkedIn(validateUrl(dataMap["Linkedin"]));
         setTikTok(validateUrl(dataMap["Tiktok"]));
 
@@ -103,7 +100,6 @@ const Footer = () => {
                 { link: instagram, img: Instagram },
                 { link: tikTok, img: Tiktok },
                 { link: linkedIn, img: Linkedin },
-                { link: twitter, img: Twitter }
               ].map((social, index) => (
                 <a key={index} href={social.link} target="_blank" rel="noopener noreferrer"
                    className="hover:scale-110 transition-transform duration-300">

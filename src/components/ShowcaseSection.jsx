@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react"; // Close icon
 import { fetchData } from "../api/Api";
-import loadingImage from "../assets/images/ffffff.png"; // Placeholder while loading
 
 const ClientShowcase = () => {
   const [enlargedImg, setEnlargedImg] = useState(null);

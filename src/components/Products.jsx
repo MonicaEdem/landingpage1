@@ -14,7 +14,6 @@ const Products = () => {
   const [shopLink, setShopLink] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const sectionRef = useRef(null);
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -29,7 +28,7 @@ const Products = () => {
           }
         });
 
-        setParagraph(dataMap["ProductsDisplay paragraph"] || "No paragraph found.");
+        setParagraph(dataMap["ProductsDisplay paragraph"] || "Discover our carefully crafted selection of organic mushroom products, designed to enhance your wellness journey. From fresh mushrooms to nutritious powders, we have something for everyone.");
         setShopLink(dataMap["Shop Button"] || "#");
 
         const dynamicProducts = [];
@@ -53,17 +52,18 @@ const Products = () => {
 
   return (
     <motion.div
-      ref={sectionRef}
       className="relative px-8 py-14 lg:px-24 bg-gradient-to-b from-green-50 to-orange-50"
       id="products"
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 1 }}
     >
       <motion.h2
         className="text-3xl font-bold text-green-700 mb-8 text-center"
         initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6 }}
       >
         Explore Our Products
@@ -79,8 +79,8 @@ const Products = () => {
           <motion.p
             className="text-gray-600 mx-auto mb-12 text-center text-lg"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }} 
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             {paragraph}
@@ -106,14 +106,14 @@ const Products = () => {
               {products.map((product) => (
                 <SwiperSlide key={product.id} className="flex flex-col items-center">
                   <motion.div
-                    key={product.id} // Forces re-rendering
+                    key={product.id}
                     className="bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
                     initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    <img src={product.image} alt={product.name} className="w-full object-cover h-64" />
+                    <img src={product.image} alt={product.name} className="w-full h-64 object-contain bg-[#F6FAF1]" />
                     <div className="p-4">
                       <h3 className="text-green-600 text-lg font-semibold">{product.name}</h3>
                       <p className="text-base text-gray-700">{product.description}</p>
@@ -149,7 +149,12 @@ const Products = () => {
           </div>
 
           {/* Call to Action Button */}
-          <motion.div className="flex justify-center mt-10" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div className="flex justify-center mt-10"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
             <motion.a
               href={shopLink}
               target="_blank"

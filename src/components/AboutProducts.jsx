@@ -21,10 +21,10 @@ useEffect(() => {
             dataMap[row[0]] = row[1]; // Map key-value pairs
           }
         });
-        setparagraph(dataMap["AboutProduct paragraph"] || "No paragraph found.");
-        setText1(dataMap["AboutProduct Text1"]);
-        setText2(dataMap["AboutProduct Text2"]);
-        setText3(dataMap["AboutProduct Text3"]);
+        setparagraph(dataMap["AboutProduct paragraph"] || "We take pride in offering fresh mushrooms and nutrient-rich mushroom products, packed with natural goodness to support a healthy lifestyle. Check out some details about our products below.");
+        setText1(dataMap["AboutProduct Text1"] || "Our mushrooms are organically grown, free from chemicals and artificial additives.");
+        setText2(dataMap["AboutProduct Text2"] || "Packed with nutrients, our products support immunity, boost energy, and enhance brain function for overall well-being.");
+        setText3(dataMap["AboutProduct Text3"] || "We prioritize sustainable sourcing and environmentally friendly packaging.");
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);

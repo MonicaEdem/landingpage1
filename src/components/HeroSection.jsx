@@ -3,12 +3,10 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import backgroundImage1 from "../assets/images/backgroundImage1.png";
 import { fetchData } from "../api/Api";
-import loadingImage from "../assets/images/ffffff.png";
 import heroImage from "../assets/images/backgroundImage1.png"
 
 const HeroSection = () => {
   const [paragraph, setparagraph] = useState("");
-  // const [imageUrl, setImageUrl] = useState("null");
 
   useEffect(() => {
     fetchData("Sheet1!A1:B100")
@@ -21,8 +19,7 @@ const HeroSection = () => {
           }
         });
   
-        setparagraph(dataMap["Paragraph"] || "No paragraph found.");
-        // setImageUrl(dataMap["Hero Image"] || loadingImage);
+        setparagraph(dataMap["Paragraph"] || "At Helicimush, we grow fresh mushrooms and transform them into convenient products. Enjoy the natural goodness with ease!");
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
