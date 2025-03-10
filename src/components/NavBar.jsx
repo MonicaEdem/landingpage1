@@ -4,7 +4,7 @@ import { fetchData } from "../api/Api";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState(""); 
+  const [activeLink, setActiveLink] = useState("");
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const [link, setLink] = useState("#");
@@ -14,7 +14,7 @@ const NavBar = () => {
     { name: "About", link: "about" },
     { name: "Products", link: "products" },
     { name: "Our Story", link: "about-innovator" },
-    { name: "Contact Us", link: "contact" }, // Footer
+    { name: "Contact Us", link: "contact" },
   ];
 
   useEffect(() => {
@@ -50,7 +50,6 @@ const NavBar = () => {
         }
       });
 
-      // ✅ Special case: Detect if user is near the bottom (Fix for Contact Us)
       const footer = document.getElementById("contact");
       if (footer) {
         const footerRect = footer.getBoundingClientRect();
@@ -71,6 +70,23 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
   const handleClick = (link) => {
     setActiveLink(link);
     setMenuOpen(false);
@@ -79,7 +95,6 @@ const NavBar = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: link === "contact" ? "end" : "start" });
 
-      // ✅ Delay setting activeLink for "Contact Us" (Fix for click issue)
       if (link === "contact") {
         setTimeout(() => setActiveLink("contact"), 300);
       }
@@ -89,10 +104,12 @@ const NavBar = () => {
   return (
     <nav className="fixed w-full bg-white text-gray-900 py-4 px-6 lg:px-20 shadow-md z-50">
       <div className="flex items-center justify-between">
+        {/* Logo */}
         <a href="#home" onClick={() => handleClick("home")}>
           {imageUrl && <img src={imageUrl} alt="logo" className="w-20 h-16" />}
         </a>
 
+        {/* Mobile Menu Button */}
         <button
           ref={buttonRef}
           className="lg:hidden block text-orange-400"
@@ -102,6 +119,7 @@ const NavBar = () => {
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
+        {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-10">
           {sections.map(({ name, link }) => (
             <a
@@ -121,6 +139,7 @@ const NavBar = () => {
             </a>
           ))}
 
+          {/* Shop Now Button */}
           <a
             href={link}
             target="_blank"
@@ -131,6 +150,42 @@ const NavBar = () => {
           </a>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          className="lg:hidden absolute top-full left-0 w-full bg-[#F8F8F8] py-6 flex flex-col items-center gap-6 transition-transform duration-300 shadow-lg rounded-b-lg"
+        >
+          {sections.map(({ name, link }) => (
+            <a
+              key={link}
+              href={`#${link}`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleClick(link);
+              }}
+              className={`text-lg transition ${
+                activeLink === link
+                  ? "text-green-500 font-semibold"
+                  : "text-gray-700 hover:text-orange-400 active:text-green-500"
+              }`}
+            >
+              {name}
+            </a>
+          ))}
+
+          {/* Shop Now Button (Mobile) */}
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-11/12 flex items-center justify-center gap-2 px-4 py-2 bg-green-500 rounded-full text-white hover:bg-orange-400 transition duration-300"
+          >
+            <ShoppingBag className="size-5" /> Shop now
+          </a>
+        </div>
+      )}
     </nav>
   );
 };
